@@ -1,23 +1,37 @@
 <template>
   <div
     class="entry-container mb-3 pointer p-2"
-    @click="$router.push({ name: 'entry', params: { id: 10 } })"
+    @click="$router.push({ name: 'entry', params: { id: data.id } })"
   >
     <div class="entry-title d-flex">
-      <span class="text-success fs-5 fw-bold">4</span>
-      <span class="mx-1 fs-5">Agosto</span>
-      <span class="mx-2 fw-light">2023</span>
+      <span class="text-success fs-5 fw-bold">{{
+        data.date.split(" ")[2]
+      }}</span>
+      <span class="mx-1 fs-5">{{ data.date.split(" ")[1] }}</span>
+      <span class="mx-2 fw-light">{{ data.date.split(" ")[3] }}</span>
     </div>
     <div class="entry-description">
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda sit
-      repudiandae fuga nostrum velit doloribus nihil maxime soluta, et aut
-      corporis ex corrupti quam unde odio, alias culpa aperiam iste.
+      {{ description }}
     </div>
   </div>
 </template>
 
 <script>
-export default {};
+export default {
+  props: {
+    data: {
+      type: Object,
+      required: true,
+    },
+  },
+  computed: {
+    description() {
+      return this.data.text.length > 130
+        ? this.data.text.slice(0, 130) + "..."
+        : this.data.text;
+    },
+  },
+};
 </script>
 
 <style scoped lang="scss">
