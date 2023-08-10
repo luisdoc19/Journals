@@ -51,7 +51,7 @@
       class="img-thumbnail"
     />
   </template>
-  <Fab @on:click="saveEntry" />
+  <Fab @on:click="saveEntry" icon="fa-save" />
 </template>
 
 <script>
@@ -62,6 +62,7 @@ import Swal from "sweetalert2";
 import uploadImage from "../helpers/uploadImage";
 
 export default {
+  name: "EntryView",
   props: {
     id: {
       type: String,
@@ -131,14 +132,13 @@ export default {
       });
 
       if (isConfirmed) {
-        new Swal({
-          title: "Espere por favor",
-          allowOutsideClick: false,
+        Swal.fire({
+          title: "Espere por favor...",
+          AllowOutsideClick: false,
         });
         Swal.showLoading();
         await this.deleteEntry(this.entry.id);
         this.$router.push({ name: "no-entry" });
-
         Swal.fire("Eliminado", "", "success");
       }
     },

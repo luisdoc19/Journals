@@ -1,16 +1,17 @@
 <template>
   <button class="btn btn-primary" @click="$emit('on:click')">
-    <i :class="onCheckRoute"></i>
+    <i class="fa fa-2x" :class="icon"></i>
   </button>
 </template>
 
 <script>
 export default {
-  computed: {
-    onCheckRoute() {
-      return this.$route.name === "no-entry"
-        ? "fa fa-2x fa-plus"
-        : "fa fa-2x fa-save";
+  name: "FabButton",
+  props: {
+    icon: {
+      type: String,
+      required: true,
+      default: "fa-plus",
     },
   },
 };

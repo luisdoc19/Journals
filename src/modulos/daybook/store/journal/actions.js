@@ -17,7 +17,6 @@ export const loadEntries = async ({ commit }) => {
   commit("setEntries", entries);
 };
 export const updateEntry = async ({ commit }, entry) => {
-  console.log(entry);
   const { id, date, picture, text } = entry;
   const updatedEntry = {
     date,
