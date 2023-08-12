@@ -1,5 +1,6 @@
 import { createRouter, createWebHashHistory } from "vue-router";
 import dayBookRouter from "../modulos/daybook/router";
+import authRouter from "../modulos/auth/router";
 import HomeView from "../views/HomeView.vue";
 
 const routes = [
@@ -20,6 +21,10 @@ const routes = [
   {
     path: "/daybook",
     ...dayBookRouter,
+  },
+  {
+    path: "/auth",
+    ...authRouter,
   },
 ];
 
