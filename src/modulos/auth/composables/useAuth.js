@@ -1,8 +1,12 @@
+import Swal from "sweetalert2";
+import { computed } from "vue";
 import { ref } from "vue";
+import { useRouter } from "vue-router";
 import { useStore } from "vuex";
 
 const useAuth = () => {
   const store = useStore();
+  const router = useRouter();
 
   const createUser = async (user) => {
     const res = await store.dispatch("auth/createUser", user);
@@ -23,11 +27,45 @@ const useAuth = () => {
     formData.value.name = name;
     formData.value.password = password;
     const { ok, message } = await createUser(formData.value);
-    console.log(ok, message);
+    if (!ok) Swal.fire("Error", message, "error");
+    else {
+      formData.value = {
+        name: "",
+        email: "",
+        password: "",
+      };
+      router.push({ name: "no-entry" });
+    }
+  };
+
+  const loginUser = async (e) => {
+    const { email, password } = Object.fromEntries(new FormData(e.target));
+    const { ok, message } = await store.dispatch("auth/signInUser", {
+      email,
+      password,
+    });
+
+    if (!ok) Swal.fire("Error", message, "error");
+    else {
+      router.push({ name: "no-entry" });
+    }
+  };
+
+  const checkStatus = async () => {
+    const res = await store.dispatch("auth/checkAuthToken");
+    return res;
   };
 
   return {
+    username: computed(() => store.getters["auth/username"]),
     handleSubmit,
+    loginUser,
+    checkStatus,
+    logout: () => {
+      store.commit("auth/logout");
+      store.commit("journal/clearEntries");
+    },
+    authStatus: computed(() => store.getters["auth/currentStatus"]),
   };
 };
 
