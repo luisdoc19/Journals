@@ -41,7 +41,7 @@ const checkAuthToken = async ({ commit }) => {
   const refreshToken = localStorage.getItem("refreshToken");
 
   if (!idToken) {
-    commit("logOut");
+    commit("logout");
     return { ok: false, message: "No hay Token" };
   }
 
@@ -58,7 +58,7 @@ const checkAuthToken = async ({ commit }) => {
 
     return { ok: true };
   } catch (error) {
-    commit("logOut");
+    commit("logout");
     return { ok: false, message: "No hay Token" };
   }
 };
